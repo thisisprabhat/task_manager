@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:task_manager/presentation/screens/homescreen/homescreen.dart';
 
 import '/domain/bloc/config_bloc/config_bloc.dart';
 import '/domain/bloc/auth_bloc/auth_bloc.dart';
 import '/core/config/app_themes.dart';
-import '/presentation/screens/homescreen/homescreen.dart';
-import 'core/config/firebase_options.dart';
+import '/data/repositories/initialize_db.dart';
+import '/presentation/screens/onboarding/onboarding.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  // await InitializeDb.initLocalDb();
+  await InitializeDb.initDb();
   runApp(const MyApp());
 }
 
