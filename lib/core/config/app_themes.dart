@@ -7,19 +7,22 @@ class AppTheme {
     useMaterial3: true,
   ).copyWith(
     colorScheme: ColorScheme.fromSeed(
-      seedColor: Colors.yellow.shade900,
+      seedColor: Colors.yellow.shade800,
       brightness: Brightness.dark,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: borderRadiusDefault),
         padding: const EdgeInsets.all(paddingDefault),
-        backgroundColor: Colors.yellow.shade900,
+        backgroundColor: Colors.yellow.shade800,
         foregroundColor: Colors.white,
       ),
     ),
-    inputDecorationTheme: const InputDecorationTheme(
-      hintStyle: TextStyle(color: Colors.grey),
+    inputDecorationTheme: InputDecorationTheme(
+      hintStyle: const TextStyle(color: Colors.grey),
+      border: OutlineInputBorder(
+        borderRadius: borderRadiusDefault,
+      ),
     ),
   );
 
@@ -27,19 +30,22 @@ class AppTheme {
     useMaterial3: true,
   ).copyWith(
     colorScheme: ColorScheme.fromSeed(
-      seedColor: Colors.yellow.shade900,
+      seedColor: Colors.yellow.shade800,
       brightness: Brightness.light,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: borderRadiusDefault),
         padding: const EdgeInsets.all(paddingDefault),
-        backgroundColor: Colors.yellow.shade900,
+        backgroundColor: Colors.yellow.shade800,
         foregroundColor: Colors.white,
       ),
     ),
-    inputDecorationTheme: const InputDecorationTheme(
-      hintStyle: TextStyle(color: Colors.grey),
+    inputDecorationTheme: InputDecorationTheme(
+      hintStyle: const TextStyle(color: Colors.grey),
+      border: OutlineInputBorder(
+        borderRadius: borderRadiusDefault,
+      ),
     ),
   );
 }
