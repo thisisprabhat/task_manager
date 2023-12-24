@@ -12,11 +12,17 @@ class Task {
   String? description;
   @HiveField(3)
   bool isCompleted;
+  @HiveField(4)
+  DateTime? createdOn;
+  @HiveField(5)
+  DateTime? updatedOn;
   Task({
     this.id,
     this.title,
     this.description,
     this.isCompleted = false,
+    this.createdOn,
+    this.updatedOn,
   });
 
   Task copyWith({
@@ -24,12 +30,16 @@ class Task {
     String? title,
     String? description,
     bool? isCompleted,
+    DateTime? createdOn,
+    DateTime? updatedOn,
   }) {
     return Task(
       id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
       isCompleted: isCompleted ?? this.isCompleted,
+      createdOn: createdOn ?? this.createdOn,
+      updatedOn: updatedOn ?? this.updatedOn,
     );
   }
 
@@ -39,6 +49,8 @@ class Task {
       'title': title,
       'description': description,
       'isCompleted': isCompleted,
+      'createdOn': createdOn?.millisecondsSinceEpoch,
+      'updatedOn': updatedOn?.millisecondsSinceEpoch,
     };
   }
 
@@ -49,17 +61,18 @@ class Task {
       description:
           map['description'] != null ? map['description'] as String : null,
       isCompleted: map['isCompleted'] as bool,
+      createdOn: map['createdOn'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['createdOn'] as int)
+          : null,
+      updatedOn: map['updatedOn'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['updatedOn'] as int)
+          : null,
     );
   }
 
   @override
   String toString() {
-    return 'Task('
-        'id: $id,'
-        'title: $title,'
-        'description: $description,'
-        'isCompleted: $isCompleted'
-        ')';
+    return 'Task(id: $id, title: $title, description: $description, isCompleted: $isCompleted, createdOn: $createdOn, updatedOn: $updatedOn)';
   }
 
   @override
@@ -69,7 +82,9 @@ class Task {
     return other.id == id &&
         other.title == title &&
         other.description == description &&
-        other.isCompleted == isCompleted;
+        other.isCompleted == isCompleted &&
+        other.createdOn == createdOn &&
+        other.updatedOn == updatedOn;
   }
 
   @override
@@ -77,6 +92,8 @@ class Task {
     return id.hashCode ^
         title.hashCode ^
         description.hashCode ^
-        isCompleted.hashCode;
+        isCompleted.hashCode ^
+        createdOn.hashCode ^
+        updatedOn.hashCode;
   }
 }

@@ -1,6 +1,8 @@
 import '/core/utils/colored_log.dart';
 import '/data/repositories/local/config_repo/hive_config_repo.dart';
+import 'local/task_repo/hive_task_repo.dart';
 import 'remote/auth_repository/firebase_auth_repo.dart';
+import 'remote/task_repository/firebase_task_repository.dart';
 import 'remote/user_repository/firebase_user_repository.dart';
 
 enum DatabaseType {
@@ -23,12 +25,13 @@ class AppRepository {
     return HiveConfigRepository();
   }
 
-  get expensesRepository {
+  get taskRepository {
     if (dbType == DatabaseType.local) {
       ColoredLog.cyan('local db returning');
-      // return HiveExpensesRepository();
+      return HiveTaskRepository();
     } else {
       ColoredLog.cyan('remote db returning');
+      return FirebaseTaskRepository();
     }
   }
 

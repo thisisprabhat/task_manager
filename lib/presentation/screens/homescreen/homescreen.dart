@@ -4,6 +4,7 @@ import 'package:task_manager/presentation/screens/homescreen/components/app_draw
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+  static const String route = '/home';
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();

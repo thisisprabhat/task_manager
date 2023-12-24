@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,7 +6,6 @@ import '/domain/bloc/auth_bloc/auth_bloc.dart';
 import '/data/models/user_model.dart';
 import '/data/repositories/app_repository.dart';
 import '/core/constants/styles.dart';
-import '/presentation/screens/authentication/login.dart';
 import '/presentation/screens/onboarding/onboarding.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -15,7 +13,6 @@ class AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isLoggedIn = FirebaseAuth.instance.currentUser == null;
     UserModel? user = context.watch<AuthBloc>().user;
     return Drawer(
       child: SafeArea(
@@ -91,27 +88,18 @@ class AppDrawer extends StatelessWidget {
               ),
             ),
             const Divider(),
-            ListTile(
-              leading: isLoggedIn
-                  ? const Icon(Icons.login)
-                  : const Icon(Icons.logout),
-              title: Text(isLoggedIn ? 'Login' : 'Logout'),
-              onTap: () {
-                if (isLoggedIn) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (_) => const Login()),
-                  );
-                } else {
-                  context.read<AuthBloc>().add(AuthEventLogout());
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const OnboardingScreen(),
-                    ),
-                  );
+            BlocListener<AuthBloc, AuthState>(
+              listener: (context, state) {
+                if (state is AuthStateLogout) {
+                  Navigator.pushReplacementNamed(
+                      context, OnboardingScreen.route);
                 }
               },
+              child: ListTile(
+                title: const Text("Logout"),
+                leading: const Icon(Icons.logout),
+                onTap: () => context.read<AuthBloc>().add(AuthEventLogout()),
+              ),
             ),
             const SizedBox(height: paddingDefault)
           ],

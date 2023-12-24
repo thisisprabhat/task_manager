@@ -12,6 +12,7 @@ part 'components/signup_text_fields.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
+  static const String route = '/signup';
 
   @override
   State<Signup> createState() => _SignupState();
@@ -38,13 +39,8 @@ class _SignupState extends State<Signup> {
         listener: (context, state) {
           if (state is AuthStateCreatingUserSuccess) {
             Navigator.pop(context);
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    const HomeScreen(), //TODO: go to splash screen
-              ),
-            );
+            Navigator.pushNamed(
+                context, HomeScreen.route); //TODO: change to home screen
           }
         },
         builder: (context, state) {

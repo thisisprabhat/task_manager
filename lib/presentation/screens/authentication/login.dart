@@ -15,6 +15,7 @@ part 'components/login_bottom_buttons.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
+  static const String route = '/login';
 
   @override
   State<Login> createState() => _LoginState();
@@ -32,12 +33,7 @@ class _LoginState extends State<Login> {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthStateLoginSuccess) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const HomeScreen(),
-            ),
-          );
+          Navigator.pushReplacementNamed(context, HomeScreen.route);
         }
       },
       builder: (context, state) {
@@ -101,12 +97,7 @@ class _LoginState extends State<Login> {
                             }
                           },
                           onCreateNewAccountPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => const Signup(),
-                              ),
-                            );
+                            Navigator.pushNamed(context, Signup.route);
                           },
                         ),
                         const SizedBox(height: 20)
