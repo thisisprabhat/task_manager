@@ -57,6 +57,8 @@ class FirebaseTaskRepository implements TaskRepository {
         throw NotFoundException('No Task found\nAdd a new Task');
       }
       return Future.value(taskList);
+    } on AppException {
+      rethrow;
     } catch (e) {
       ColoredLog(e, name: 'Fetch allTask Error');
       throw AppException(exceptionType: "Fetch allTask", message: e.toString());
@@ -86,6 +88,8 @@ class FirebaseTaskRepository implements TaskRepository {
         throw NotFoundException('No Task added today\nAdd a new Task');
       }
       return taskList;
+    } on AppException {
+      rethrow;
     } catch (e) {
       ColoredLog(e, name: 'Fetch allTask Error');
       throw AppException(exceptionType: "Fetch allTask", message: e.toString());

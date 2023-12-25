@@ -81,7 +81,7 @@ class NotFoundException extends AppException {
   NotFoundException([String? message, String? url])
       : super(
           title: 'Not Found',
-          message: 'No Results Found!',
+          message: message ?? 'No Results Found!',
           lottiePath: AppAssets.notFoundAnimation,
           exceptionType: 'Not Found',
         );

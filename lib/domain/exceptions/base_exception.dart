@@ -16,7 +16,7 @@ class AppException implements Exception {
   });
   @override
   String toString() {
-    return "title : $title  message: $message ${lottiePath == null ? "" : "\nlottiePath: $lottiePath"} ${imagePath == null ? "" : "\nlottiePath: $imagePath"}";
+    return "$exceptionType(title : $title, message: $message)";
   }
 
   get print {

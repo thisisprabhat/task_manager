@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '/core/constants/styles.dart';
 import '/data/models/task_model.dart';
+import '/domain/bloc/task_bloc/task_bloc.dart';
 import '/presentation/screens/add_edit_task/add_edit_task.dart';
 
 class TaskTile extends StatefulWidget {
@@ -35,9 +37,7 @@ class _TaskTileState extends State<TaskTile> {
           ),
           SlidableAction(
             onPressed: (context) async {
-              setState(() {
-                // listOfTasks.remove(task);
-              });
+              context.read<TaskBloc>().add(TaskDeleteEvent(task));
             },
             icon: Icons.delete,
             label: 'Delete',

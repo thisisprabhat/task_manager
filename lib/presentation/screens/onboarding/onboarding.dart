@@ -25,7 +25,7 @@ class OnboardingScreen extends StatelessWidget {
           listener: (context, state) {
             if (state is AuthStateAlreadyLoggedIn) {
               // Navigator.pushReplacementNamed(context, HomeScreen.path);
-              context.pushNamed(HomeScreen.routeName);
+              GoRouter.of(context).pushNamed(HomeScreen.routeName);
             }
           },
           builder: (context, state) {
@@ -45,7 +45,12 @@ class OnboardingScreen extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: Lottie.asset(AppAssets.onboardingAnimation),
+              child: Hero(
+                tag: 'onboardingAsset',
+                child: Lottie.asset(
+                  AppAssets.onboardingAnimation,
+                ),
+              ),
             ),
             const Text(
               'Welcome to ${AppConstant.appName}',
@@ -62,7 +67,7 @@ class OnboardingScreen extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {
                   // Navigator.pushReplacementNamed(context, Login.path);
-                  context.pushReplacementNamed(Login.routeName);
+                  GoRouter.of(context).pushReplacementNamed(Login.routeName);
                 },
                 child: const Text("Get Started"),
               ),

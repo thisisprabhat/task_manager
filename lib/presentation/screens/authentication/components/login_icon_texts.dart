@@ -14,10 +14,13 @@ class LoginIconAndTexts extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Lottie.asset(
-            AppAssets.onboardingAnimation,
-            height: 250,
-            width: 250,
+          Hero(
+            tag: 'onboardingAsset',
+            child: Lottie.asset(
+              AppAssets.onboardingAnimation,
+              height: 250,
+              width: 250,
+            ),
           ),
           const Text(
             'Task Manager',

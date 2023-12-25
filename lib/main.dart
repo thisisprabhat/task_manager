@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '/domain/bloc/task_bloc/task_bloc.dart';
 import '/domain/bloc/config_bloc/config_bloc.dart';
 import '/domain/bloc/auth_bloc/auth_bloc.dart';
 import '/core/config/app_themes.dart';
 import '/data/repositories/initialize_db.dart';
-import '/presentation/screens/onboarding/onboarding.dart';
 import 'core/config/routes.dart';
 
 void main() async {
@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => ConfigBloc()..add(ConfigGetEvent()),
         ),
+        BlocProvider(create: (context) => TaskBloc()..add(TaskSyncEvent())),
       ],
       child: BlocBuilder<ConfigBloc, ConfigState>(
         builder: (context, state) => MaterialApp.router(

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:task_manager/core/constants/app_constants.dart';
-import 'package:task_manager/presentation/screens/add_edit_task/add_edit_task.dart';
-import 'package:task_manager/presentation/screens/homescreen/components/app_drawer.dart';
-import 'package:task_manager/presentation/screens/homescreen/homescreen.dart';
-import 'package:task_manager/presentation/screens/profile/profile_screen.dart';
-import 'package:task_manager/presentation/screens/search/search_page.dart';
+
+import '/presentation/screens/search/search_page.dart';
+import '/presentation/screens/profile/profile_screen.dart';
+import '/presentation/screens/homescreen/homescreen.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key, required this.child});

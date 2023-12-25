@@ -62,6 +62,8 @@ class HiveTaskRepository implements TaskRepository {
         throw NotFoundException('No Task found\nAdd a new Task');
       }
       return Future.value(taskList);
+    } on AppException {
+      rethrow;
     } catch (e) {
       ColoredLog(e, name: 'Fetch allTask Error');
       throw AppException(exceptionType: "Fetch allTask", message: e.toString());
@@ -87,6 +89,8 @@ class HiveTaskRepository implements TaskRepository {
         throw NotFoundException('No Task found\nAdd a new Task');
       }
       return Future.value(taskList);
+    } on AppException {
+      rethrow;
     } catch (e) {
       ColoredLog(e, name: 'Fetch Daily Error');
       throw AppException(

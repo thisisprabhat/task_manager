@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:task_manager/domain/bloc/task_bloc/task_bloc.dart';
 import 'package:uuid/uuid.dart';
 
 import '/core/constants/styles.dart';
@@ -149,6 +151,7 @@ class _AddEditTaskState extends State<AddEditTask> {
           ..title = _titleController.text.trim()
           ..description = _descriptionController.text.trim()
           ..updatedOn = DateTime.now();
+        context.read<TaskBloc>().add(TaskUpdateEvent(task));
       } else {
         task = Task()
           ..id = const Uuid().v4()
@@ -156,8 +159,8 @@ class _AddEditTaskState extends State<AddEditTask> {
           ..description = _descriptionController.text.trim()
           ..updatedOn = DateTime.now()
           ..createdOn = DateTime.now();
+        context.read<TaskBloc>().add(TaskAddEvent(task));
       }
-      // listOfTasks.add(task);
       Navigator.pop(context);
     }
   }
