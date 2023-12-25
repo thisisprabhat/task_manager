@@ -112,7 +112,11 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
             .contains(event.searchText.toLowerCase()))
         .toList();
     searchTaskList.addAll(tempList);
-    emit(TaskLoadedState(searchTaskList));
+    if (tempList.isEmpty) {
+      emit(TaskErrorState(NotFoundException('searched task not found')));
+    } else {
+      emit(TaskLoadedState(searchTaskList));
+    }
   }
 
   FutureOr<void> _syncTaskEvent(

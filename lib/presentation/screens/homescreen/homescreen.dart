@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:task_manager/presentation/widgets/error_widget.dart';
-import 'package:task_manager/presentation/widgets/loader.dart';
 
 import '/domain/bloc/task_bloc/task_bloc.dart';
 import '/core/constants/app_constants.dart';
 import '/data/models/task_model.dart';
+import '/presentation/widgets/loader.dart';
+import '/presentation/widgets/error_widget.dart';
 import '/presentation/screens/homescreen/components/task_tile.dart';
 import '/presentation/screens/add_edit_task/add_edit_task.dart';
 import '/presentation/screens/homescreen/components/app_drawer.dart';
@@ -26,7 +26,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      appBar: AppBar(title: const Text(AppConstant.appName)),
+      appBar: AppBar(
+        title: const Text(AppConstant.appName),
+        centerTitle: true,
+      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => showAddTaskBottomModelSheet(context),
         label: const Text('Add Task'),
