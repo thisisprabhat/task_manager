@@ -11,7 +11,7 @@ enum ThemeColor {
   orange,
   brown,
   grey,
-  black,
+  teal,
   lime,
   pink,
   creame,
@@ -33,8 +33,8 @@ getThemeColor(ThemeColor themeColor) {
       return Colors.brown;
     case ThemeColor.grey:
       return Colors.grey;
-    case ThemeColor.black:
-      return Colors.black;
+    case ThemeColor.teal:
+      return Colors.teal;
     case ThemeColor.lime:
       return Colors.lime;
     case ThemeColor.pink:

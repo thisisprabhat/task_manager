@@ -8,12 +8,16 @@ class Loader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color loaderColor = Theme.of(context).colorScheme.primary;
     return Scaffold(
       body: Center(
-        child: Lottie.asset(
-          AppAssets.loaderAnimation,
-          height: 100,
-          width: 100,
+        child: ColorFiltered(
+          colorFilter: ColorFilter.mode(loaderColor, BlendMode.modulate),
+          child: Lottie.asset(
+            AppAssets.loaderAnimation,
+            height: 100,
+            width: 100,
+          ),
         ),
       ),
     );

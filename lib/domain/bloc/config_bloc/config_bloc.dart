@@ -12,8 +12,8 @@ part 'config_state.dart';
 class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
   final ConfigRepository _repo = AppRepository().configRepository;
 
-  ThemeMode themeMode = ThemeMode.dark;
-  ThemeColor themeColor = ThemeColor.blue;
+  ThemeMode themeMode = ThemeMode.light;
+  ThemeColor themeColor = ThemeColor.dynamic;
 
   ConfigBloc() : super(ConfigInitialState()) {
     on<ConfigThemeModeChangeEvent>(_configChangeEvent);

@@ -1,3 +1,4 @@
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,6 +8,7 @@ import '/domain/bloc/auth_bloc/auth_bloc.dart';
 import '/core/config/app_themes.dart';
 import '/data/repositories/initialize_db.dart';
 import 'core/config/routes.dart';
+import 'presentation/screens/settings/components/theme_switcher.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,14 +32,27 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => TaskBloc()..add(TaskSyncEvent())),
       ],
       child: BlocBuilder<ConfigBloc, ConfigState>(
-        builder: (context, state) => MaterialApp.router(
-          title: 'Tasky',
-          routerConfig: AppRoute.goRouter,
-          debugShowCheckedModeBanner: false,
-          theme: AppTheme.lightTheme(context.watch<ConfigBloc>().themeColor),
-          darkTheme: AppTheme.darkTheme(context.watch<ConfigBloc>().themeColor),
-          themeMode: context.watch<ConfigBloc>().themeMode,
-        ),
+        builder: (context, state) => DynamicColorBuilder(
+            builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+          print(lightDynamic.toString() + 'dynamicLight');
+          print(darkDynamic.toString() + 'dynamicDark');
+          ThemeColor themeColor = context.watch<ConfigBloc>().themeColor;
+          ThemeData lightTheme = themeColor == ThemeColor.dynamic
+              ? AppTheme.lightTheme(lightDynamic?.primary ?? Colors.blue)
+              : AppTheme.lightTheme(getThemeColor(themeColor));
+          ThemeData darkTheme = themeColor == ThemeColor.dynamic
+              ? AppTheme.darkTheme(lightDynamic?.primary ?? Colors.blue)
+              : AppTheme.darkTheme(getThemeColor(themeColor));
+
+          return MaterialApp.router(
+            title: 'Tasky',
+            routerConfig: AppRoute.goRouter,
+            debugShowCheckedModeBanner: false,
+            theme: lightTheme,
+            darkTheme: darkTheme,
+            themeMode: context.watch<ConfigBloc>().themeMode,
+          );
+        }),
       ),
     );
   }
