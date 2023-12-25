@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
+import '/presentation/screens/profile/profile_screen.dart';
+import '/presentation/screens/homescreen/homescreen.dart';
 import '/domain/bloc/config_bloc/config_bloc.dart';
 import '/domain/bloc/auth_bloc/auth_bloc.dart';
 import '/data/models/user_model.dart';
-import '/data/repositories/app_repository.dart';
 import '/core/constants/styles.dart';
+import '/presentation/screens/settings/settings.dart';
 import '/presentation/screens/onboarding/onboarding.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -65,21 +68,31 @@ class AppDrawer extends StatelessWidget {
                           ),
                         ),
                         ListTile(
-                          title: const Text("Offline Mode"),
-                          leading: const Icon(Icons
-                              .signal_wifi_connected_no_internet_4_outlined),
-                          trailing: Switch(
-                            value: state.database == DatabaseType.local,
-                            onChanged: (val) {
-                              context.read<ConfigBloc>().add(
-                                    ConfigThemeModeChangeEvent(
-                                      database: val
-                                          ? DatabaseType.local
-                                          : DatabaseType.remote,
-                                    ),
-                                  );
-                            },
-                          ),
+                          title: const Text("Home"),
+                          leading: const Icon(Icons.home),
+                          onTap: () {
+                            // Navigator.pushNamed(context, HomeScreen.path);
+                            context.pop();
+                            context.goNamed(HomeScreen.routeName);
+                          },
+                        ),
+                        ListTile(
+                          title: const Text("Settings"),
+                          leading: const Icon(Icons.settings),
+                          onTap: () {
+                            // Navigator.pushNamed(context, SettingsScreen.path);
+                            context.pop();
+                            context.pushNamed(SettingsScreen.routeName);
+                          },
+                        ),
+                        ListTile(
+                          title: const Text("Profile"),
+                          leading: const Icon(Icons.person),
+                          onTap: () {
+                            // Navigator.pushNamed(context, ProfileScreen.path);
+                            context.pop();
+                            context.goNamed(ProfileScreen.routeName);
+                          },
                         ),
                       ],
                     ),
@@ -91,8 +104,9 @@ class AppDrawer extends StatelessWidget {
             BlocListener<AuthBloc, AuthState>(
               listener: (context, state) {
                 if (state is AuthStateLogout) {
-                  Navigator.pushReplacementNamed(
-                      context, OnboardingScreen.route);
+                  // Navigator.pushReplacementNamed(
+                  //     context, OnboardingScreen.path);
+                  context.goNamed(OnboardingScreen.routeName);
                 }
               },
               child: ListTile(

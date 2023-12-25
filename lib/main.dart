@@ -29,10 +29,9 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: BlocBuilder<ConfigBloc, ConfigState>(
-        builder: (context, state) => MaterialApp(
+        builder: (context, state) => MaterialApp.router(
           title: 'Task Manager',
-          initialRoute: OnboardingScreen.route,
-          onGenerateRoute: AppRoute.onGenerateRoute,
+          routerConfig: AppRoute.goRouter,
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,

@@ -4,8 +4,8 @@ abstract class ConfigEvent {}
 
 class ConfigThemeModeChangeEvent extends ConfigEvent {
   final ThemeMode? themeMode;
-  final DatabaseType? database;
-  ConfigThemeModeChangeEvent({this.themeMode, this.database});
+  final ThemeColor? themeColor;
+  ConfigThemeModeChangeEvent({this.themeMode, this.themeColor});
 }
 
 class ConfigGetEvent extends ConfigEvent {}

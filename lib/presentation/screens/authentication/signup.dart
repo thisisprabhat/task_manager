@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '/data/models/user_model.dart';
 import '/domain/bloc/auth_bloc/auth_bloc.dart';
@@ -12,7 +13,8 @@ part 'components/signup_text_fields.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
-  static const String route = '/signup';
+  static const String path = '/signup';
+  static const String routeName = 'signup';
 
   @override
   State<Signup> createState() => _SignupState();
@@ -38,9 +40,8 @@ class _SignupState extends State<Signup> {
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthStateCreatingUserSuccess) {
-            Navigator.pop(context);
-            Navigator.pushNamed(
-                context, HomeScreen.route); //TODO: change to home screen
+            context.pop();
+            context.pushReplacementNamed(HomeScreen.routeName);
           }
         },
         builder: (context, state) {
@@ -82,7 +83,7 @@ class _SignupState extends State<Signup> {
                   children: [
                     const Text('Already have an account'),
                     TextButton(
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () => context.pop(),
                       child: const Text('Login'),
                     ),
                   ],

@@ -37,7 +37,7 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: borderRadiusDefault),
         padding: const EdgeInsets.all(paddingDefault),
-        backgroundColor: Colors.yellow.shade800,
+        backgroundColor: Colors.yellow.shade600,
         foregroundColor: Colors.white,
       ),
     ),

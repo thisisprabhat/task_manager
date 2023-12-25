@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 
 import '/presentation/screens/authentication/signup.dart';
@@ -15,7 +16,8 @@ part 'components/login_bottom_buttons.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
-  static const String route = '/login';
+  static const String path = '/login';
+  static const String routeName = 'login';
 
   @override
   State<Login> createState() => _LoginState();
@@ -33,7 +35,8 @@ class _LoginState extends State<Login> {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthStateLoginSuccess) {
-          Navigator.pushReplacementNamed(context, HomeScreen.route);
+          // Navigator.pushReplacementNamed(context, HomeScreen.path);
+          context.pushReplacementNamed(HomeScreen.routeName);
         }
       },
       builder: (context, state) {
@@ -97,7 +100,8 @@ class _LoginState extends State<Login> {
                             }
                           },
                           onCreateNewAccountPressed: () {
-                            Navigator.pushNamed(context, Signup.route);
+                            // Navigator.pushNamed(context, Signup.path);
+                            context.pushNamed(Signup.routeName);
                           },
                         ),
                         const SizedBox(height: 20)

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 
 import '/presentation/widgets/loader.dart';
@@ -12,7 +13,9 @@ import '/core/constants/styles.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
-  static const String route = '/onboarding';
+  static const String path = '/';
+  static const String routeName = 'onboarding';
+
   @override
   Widget build(BuildContext context) {
     context.read<AuthBloc>().add(AuthEventCheckLoggedInUser());
@@ -21,7 +24,8 @@ class OnboardingScreen extends StatelessWidget {
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthStateAlreadyLoggedIn) {
-              Navigator.pushReplacementNamed(context, HomeScreen.route);
+              // Navigator.pushReplacementNamed(context, HomeScreen.path);
+              context.pushNamed(HomeScreen.routeName);
             }
           },
           builder: (context, state) {
@@ -57,7 +61,8 @@ class OnboardingScreen extends StatelessWidget {
               constraints: const BoxConstraints(minWidth: double.maxFinite),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, Login.route);
+                  // Navigator.pushReplacementNamed(context, Login.path);
+                  context.pushReplacementNamed(Login.routeName);
                 },
                 child: const Text("Get Started"),
               ),

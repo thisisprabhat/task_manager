@@ -12,8 +12,8 @@ class Loader extends StatelessWidget {
       body: Center(
         child: Lottie.asset(
           AppAssets.loaderAnimation,
-          height: 90,
-          width: 90,
+          height: 100,
+          width: 100,
         ),
       ),
     );

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
-  static const String route = '/search';
+  static const String path = '/search';
+  static const String routeName = 'Search';
 
   @override
   State<SearchPage> createState() => _SearchPageState();
