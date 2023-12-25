@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '/domain/bloc/config_bloc/config_bloc.dart';
+import '/presentation/screens/settings/components/theme_switcher.dart';
 
 abstract class ConfigRepository {
   ///It gives the persisted [dark_mode] or [light_mode] of the app

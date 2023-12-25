@@ -25,7 +25,7 @@ class OnboardingScreen extends StatelessWidget {
           listener: (context, state) {
             if (state is AuthStateAlreadyLoggedIn) {
               // Navigator.pushReplacementNamed(context, HomeScreen.path);
-              GoRouter.of(context).pushNamed(HomeScreen.routeName);
+              GoRouter.of(context).goNamed(HomeScreen.routeName);
             }
           },
           builder: (context, state) {
@@ -67,7 +67,7 @@ class OnboardingScreen extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {
                   // Navigator.pushReplacementNamed(context, Login.path);
-                  GoRouter.of(context).pushReplacementNamed(Login.routeName);
+                  GoRouter.of(context).goNamed(Login.routeName);
                 },
                 child: const Text("Get Started"),
               ),

@@ -36,7 +36,7 @@ class _LoginState extends State<Login> {
       listener: (context, state) {
         if (state is AuthStateLoginSuccess) {
           // Navigator.pushReplacementNamed(context, HomeScreen.path);
-          context.pushReplacementNamed(HomeScreen.routeName);
+          context.goNamed(HomeScreen.routeName);
         }
       },
       builder: (context, state) {

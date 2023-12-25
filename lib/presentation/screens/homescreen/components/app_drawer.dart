@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import '/presentation/screens/profile/profile_screen.dart';
 import '/presentation/screens/homescreen/homescreen.dart';
-import '/domain/bloc/config_bloc/config_bloc.dart';
 import '/domain/bloc/auth_bloc/auth_bloc.dart';
 import '/data/models/user_model.dart';
 import '/core/constants/styles.dart';
+import '/presentation/screens/settings/components/theme_switcher.dart';
 import '/presentation/screens/settings/settings.dart';
 import '/presentation/screens/onboarding/onboarding.dart';
 
@@ -20,17 +20,9 @@ class AppDrawer extends StatelessWidget {
     return Drawer(
       child: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.all(paddingDefault / 2),
-              child: CircleAvatar(
-                radius: 40,
-                child: Icon(
-                  Icons.person,
-                  size: 44,
-                ),
-              ),
-            ),
+            const SizedBox(height: paddingDefault),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: paddingDefault),
               child: Text(
@@ -48,54 +40,54 @@ class AppDrawer extends StatelessWidget {
               child: ListView(
                 physics: const BouncingScrollPhysics(),
                 children: [
-                  BlocBuilder<ConfigBloc, ConfigState>(
-                    builder: (context, state) => Column(
-                      children: [
-                        ListTile(
-                          title: const Text("DarkMode"),
-                          leading: const Icon(Icons.dark_mode),
-                          trailing: Switch(
-                            value: state.themeMode == ThemeMode.dark,
-                            onChanged: (val) {
-                              context.read<ConfigBloc>().add(
-                                    ConfigThemeModeChangeEvent(
-                                      themeMode: val
-                                          ? ThemeMode.dark
-                                          : ThemeMode.light,
-                                    ),
-                                  );
+                  Column(
+                    children: [
+                      ListTile(
+                        title: const Text("Home"),
+                        leading: const Icon(Icons.home),
+                        onTap: () {
+                          // Navigator.pushNamed(context, HomeScreen.path);
+                          context.pop();
+                          context.goNamed(HomeScreen.routeName);
+                        },
+                      ),
+                      ListTile(
+                        title: const Text("Settings"),
+                        leading: const Icon(Icons.settings),
+                        onTap: () {
+                          // Navigator.pushNamed(context, SettingsScreen.path);
+                          context.pop();
+                          context.pushNamed(SettingsScreen.routeName);
+                        },
+                      ),
+                      ListTile(
+                        title: const Text("Profile"),
+                        leading: const Icon(Icons.person),
+                        onTap: () {
+                          // Navigator.pushNamed(context, ProfileScreen.path);
+                          context.pop();
+                          context.goNamed(ProfileScreen.routeName);
+                        },
+                      ),
+                      ListTile(
+                        title: const Text("Theme"),
+                        leading: const Icon(Icons.dark_mode),
+                        onTap: () {
+                          showModalBottomSheet<void>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return const SizedBox(
+                                  height: 300, child: ThemeSwitcher());
                             },
-                          ),
-                        ),
-                        ListTile(
-                          title: const Text("Home"),
-                          leading: const Icon(Icons.home),
-                          onTap: () {
-                            // Navigator.pushNamed(context, HomeScreen.path);
-                            context.pop();
-                            context.goNamed(HomeScreen.routeName);
-                          },
-                        ),
-                        ListTile(
-                          title: const Text("Settings"),
-                          leading: const Icon(Icons.settings),
-                          onTap: () {
-                            // Navigator.pushNamed(context, SettingsScreen.path);
-                            context.pop();
-                            context.pushNamed(SettingsScreen.routeName);
-                          },
-                        ),
-                        ListTile(
-                          title: const Text("Profile"),
-                          leading: const Icon(Icons.person),
-                          onTap: () {
-                            // Navigator.pushNamed(context, ProfileScreen.path);
-                            context.pop();
-                            context.goNamed(ProfileScreen.routeName);
-                          },
-                        ),
-                      ],
-                    ),
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(30),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ],
               ),

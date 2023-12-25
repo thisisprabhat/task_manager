@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '/domain/exceptions/app_exception.dart';
 import '/presentation/widgets/error_widget.dart';
 import '/presentation/screens/homescreen/components/task_tile.dart';
 import '/domain/bloc/task_bloc/task_bloc.dart';
@@ -53,6 +54,11 @@ class _SearchPageState extends State<SearchPage> {
               style: TextStyle(fontSize: 22),
             ));
           } else if (state is TaskLoadedState) {
+            if (state.listOfTasks.isEmpty) {
+              return CustomErrorWidget(
+                exceptionCaught: NotFoundException('Searched task not found'),
+              );
+            }
             return Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: ListView.builder(
@@ -63,8 +69,6 @@ class _SearchPageState extends State<SearchPage> {
                 },
               ),
             );
-          } else if (state is TaskErrorState) {
-            return CustomErrorWidget(exceptionCaught: state.exception);
           } else {
             return const Center(child: Text('Search your tasks...'));
           }

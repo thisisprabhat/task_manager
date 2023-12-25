@@ -83,23 +83,23 @@ class AppRoute {
     ],
   );
 
-  static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
-    switch (settings.name) {
-      case HomeScreen.path:
-        return MaterialPageRoute(
-            builder: (_) => const HomeScreen(), settings: settings);
-      case OnboardingScreen.path:
-        return MaterialPageRoute(builder: (_) => const OnboardingScreen());
-      case Login.path:
-        return MaterialPageRoute(builder: (_) => const Login());
-      case Signup.path:
-        return MaterialPageRoute(builder: (_) => const Signup());
-      case SettingsScreen.path:
-        return MaterialPageRoute(builder: (_) => const SettingsScreen());
-      case ProfileScreen.path:
-        return MaterialPageRoute(builder: (_) => const ProfileScreen());
-      default:
-        return null;
-    }
-  }
+  // static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
+  //   switch (settings.name) {
+  //     case HomeScreen.path:
+  //       return MaterialPageRoute(
+  //           builder: (_) => const HomeScreen(), settings: settings);
+  //     case OnboardingScreen.path:
+  //       return MaterialPageRoute(builder: (_) => const OnboardingScreen());
+  //     case Login.path:
+  //       return MaterialPageRoute(builder: (_) => const Login());
+  //     case Signup.path:
+  //       return MaterialPageRoute(builder: (_) => const Signup());
+  //     case SettingsScreen.path:
+  //       return MaterialPageRoute(builder: (_) => const SettingsScreen());
+  //     case ProfileScreen.path:
+  //       return MaterialPageRoute(builder: (_) => const ProfileScreen());
+  //     default:
+  //       return null;
+  //   }
+  // }
 }

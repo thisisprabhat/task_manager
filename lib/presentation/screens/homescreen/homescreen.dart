@@ -20,8 +20,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool isDone = false;
-  int currentPageIndex = 0;
+  @override
+  void initState() {
+    super.initState();
+    context.read<TaskBloc>().add(TaskLoadEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;

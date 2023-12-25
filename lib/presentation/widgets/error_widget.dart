@@ -36,10 +36,10 @@ class CustomErrorWidget extends StatelessWidget {
           ),
           if (onPressed != null) ...[
             const SizedBox(height: 10),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  foregroundColor: Theme.of(context).colorScheme.onSurface,
-                  backgroundColor: Theme.of(context).colorScheme.surface),
+            TextButton(
+              style: TextButton.styleFrom(
+                  backgroundColor:
+                      Theme.of(context).colorScheme.primary.withOpacity(0.2)),
               onPressed: onPressed,
               child: const Text("Retry"),
             ),

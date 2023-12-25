@@ -1,51 +1,56 @@
 import 'package:flutter/material.dart';
+import '/presentation/screens/settings/components/theme_switcher.dart';
 
 import '/core/constants/styles.dart';
 
 class AppTheme {
-  static ThemeData darkTheme = ThemeData.dark(
-    useMaterial3: true,
-  ).copyWith(
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: Colors.yellow.shade800,
-      brightness: Brightness.dark,
-    ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(borderRadius: borderRadiusDefault),
-        padding: const EdgeInsets.all(paddingDefault),
-        backgroundColor: Colors.yellow.shade800,
-        foregroundColor: Colors.white,
+  static ThemeData darkTheme(ThemeColor themeColor) {
+    return ThemeData.dark(
+      useMaterial3: true,
+    ).copyWith(
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: getThemeColor(themeColor),
+        brightness: Brightness.dark,
       ),
-    ),
-    inputDecorationTheme: InputDecorationTheme(
-      hintStyle: const TextStyle(color: Colors.grey),
-      border: OutlineInputBorder(
-        borderRadius: borderRadiusDefault,
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(borderRadius: borderRadiusDefault),
+          padding: const EdgeInsets.all(paddingDefault),
+          backgroundColor: getThemeColor(themeColor),
+          foregroundColor: Colors.white,
+        ),
       ),
-    ),
-  );
+      inputDecorationTheme: InputDecorationTheme(
+        hintStyle: const TextStyle(color: Colors.grey),
+        border: OutlineInputBorder(
+          borderRadius: borderRadiusDefault,
+        ),
+      ),
+    );
+  }
 
-  static ThemeData lightTheme = ThemeData.light(
-    useMaterial3: true,
-  ).copyWith(
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: Colors.yellow.shade800,
-      brightness: Brightness.light,
-    ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(borderRadius: borderRadiusDefault),
-        padding: const EdgeInsets.all(paddingDefault),
-        backgroundColor: Colors.yellow.shade600,
-        foregroundColor: Colors.white,
+  static ThemeData lightTheme(ThemeColor themeColor) {
+    return ThemeData.light(
+      useMaterial3: true,
+    ).copyWith(
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: getThemeColor(themeColor),
+        brightness: Brightness.light,
       ),
-    ),
-    inputDecorationTheme: InputDecorationTheme(
-      hintStyle: const TextStyle(color: Colors.grey),
-      border: OutlineInputBorder(
-        borderRadius: borderRadiusDefault,
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(borderRadius: borderRadiusDefault),
+          padding: const EdgeInsets.all(paddingDefault),
+          backgroundColor: getThemeColor(themeColor),
+          foregroundColor: Colors.white,
+        ),
       ),
-    ),
-  );
+      inputDecorationTheme: InputDecorationTheme(
+        hintStyle: const TextStyle(color: Colors.grey),
+        border: OutlineInputBorder(
+          borderRadius: borderRadiusDefault,
+        ),
+      ),
+    );
+  }
 }

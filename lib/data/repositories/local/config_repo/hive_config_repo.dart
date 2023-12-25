@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '/domain/bloc/config_bloc/config_bloc.dart';
+import '/presentation/screens/settings/components/theme_switcher.dart';
 import '/core/utils/colored_log.dart';
 import '/data/repositories/local/config_repo/config_repo.dart';
 

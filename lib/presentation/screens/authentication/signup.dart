@@ -41,7 +41,7 @@ class _SignupState extends State<Signup> {
         listener: (context, state) {
           if (state is AuthStateCreatingUserSuccess) {
             context.pop();
-            context.pushReplacementNamed(HomeScreen.routeName);
+            context.goNamed(HomeScreen.routeName);
           }
         },
         builder: (context, state) {

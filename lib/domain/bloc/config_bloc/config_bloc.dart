@@ -4,26 +4,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '/core/utils/colored_log.dart';
 import '/data/repositories/app_repository.dart';
 import '/data/repositories/local/config_repo/config_repo.dart';
+import '/presentation/screens/settings/components/theme_switcher.dart';
 
 part 'config_event.dart';
 part 'config_state.dart';
-
-enum ThemeColor {
-  dynamic,
-  blue,
-  green,
-  purple,
-  orange,
-  brown,
-  grey,
-  black,
-}
 
 class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
   final ConfigRepository _repo = AppRepository().configRepository;
 
   ThemeMode themeMode = ThemeMode.dark;
-  ThemeColor themeColor = ThemeColor.dynamic;
+  ThemeColor themeColor = ThemeColor.blue;
 
   ConfigBloc() : super(ConfigInitialState()) {
     on<ConfigThemeModeChangeEvent>(_configChangeEvent);
