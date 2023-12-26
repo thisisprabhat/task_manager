@@ -1,6 +1,8 @@
 # Tasky - A Task manager app
 
-A task manager app built using flutter, firebase and hive localdb
+- A task manager app built using flutter, firebase and hive localdb
+- [Download apk](https://drive.google.com/file/d/1ejReXqDe5grwa41umYQm2i7ZDvcCOyY0/view?usp=sharing)
+- [live app](https://tasky-web-gold.vercel.app/)
 
 ## Features
 - Stores data in firebase when connected to internet, else store data in hive local db.
