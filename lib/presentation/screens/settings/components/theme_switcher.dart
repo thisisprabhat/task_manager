@@ -78,7 +78,7 @@ class ThemeSwitcher extends StatelessWidget {
                 children: List.generate(ThemeColor.values.length, (index) {
                   final themeColor = ThemeColor.values[index];
                   if (themeColor == ThemeColor.dynamic) {
-                    return const SizedBox();
+                    return const SizedBox.shrink();
                   }
                   return ColorSelector(
                     circleColor: getThemeColor(themeColor),
@@ -206,8 +206,6 @@ Widget themeModeBox({
       ? context.watch<ConfigBloc>().themeColor
       : context.watch<ConfigBloc>().themeMode;
 
-  print(
-      boxThemeStatus); //#########################################################
   return Expanded(
       child: InkWell(
     onTap: () {
@@ -218,9 +216,6 @@ Widget themeModeBox({
           : context
               .read<ConfigBloc>()
               .add(ConfigThemeModeChangeEvent(themeMode: boxThemeMode));
-      print(boxThemeMode);
-      print("Theme is feed to ConfigBloc: $boxThemeStatus");
-      print(boxThemeStatus == boxThemeMode);
     },
     borderRadius: BorderRadius.only(
       topLeft: Radius.circular(topLeft),

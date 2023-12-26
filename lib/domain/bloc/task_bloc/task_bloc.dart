@@ -23,11 +23,11 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
   late StreamSubscription<InternetStatus> _listener;
 
-  get getTaskStreams => AppRepository().taskRepository.getTaskStreams;
-  get listOfCompletedTasks =>
-      listOfTasks.where((element) => element.isCompleted == true).toList();
-  get listOfPendingTasks =>
-      listOfTasks.where((element) => element.isCompleted == false).toList();
+  // get getTaskStreams => AppRepository().taskRepository.getTaskStreams;
+  // get listOfCompletedTasks =>
+  //     listOfTasks.where((element) => element.isCompleted == true).toList();
+  // get listOfPendingTasks =>
+  //     listOfTasks.where((element) => element.isCompleted == false).toList();
 
   TaskBloc() : super(TaskInitialState()) {
     on<TaskLoadEvent>(_loadTaskEvent);
@@ -44,11 +44,10 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     ColoredLog.cyan('loadTaskEvent initiated', name: "Event Triggered");
     try {
       listOfTasks = await repo.getAllTasks();
-      emit(TaskLoadedState(listOfTasks));
-
       if (AppRepository.dbType == DatabaseType.remote) {
         await _syncRemoteToLocal(listOfTasks);
       }
+      emit(TaskLoadedState(listOfTasks));
     } on AppException catch (e) {
       e.print;
       emit(TaskErrorState(e));
@@ -63,6 +62,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     ColoredLog.cyan('addTaskEvent initiated', name: "Event Triggered");
     try {
       await repo.addTask(event.task);
+      Fluttertoast.showToast(msg: 'Task added successfully');
       add(TaskLoadEvent());
     } on AppException catch (e) {
       e.print;
@@ -77,6 +77,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     ColoredLog.cyan('deleteTaskEvent initiated', name: "Event Triggered");
     try {
       await repo.deleteTask(event.task);
+      Fluttertoast.showToast(msg: '${event.task.title},deleted successfully');
       add(TaskLoadEvent());
     } on AppException catch (e) {
       e.print;
@@ -92,6 +93,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
     try {
       await repo.editTask(event.task);
+      Fluttertoast.showToast(msg: 'task updated successfully');
       add(TaskLoadEvent());
     } on AppException catch (e) {
       e.print;
@@ -118,42 +120,41 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
   FutureOr<void> _syncTaskEvent(
       TaskSyncEvent event, Emitter<TaskState> emit) async {
-    _listener =
-        InternetConnection().onStatusChange.listen((InternetStatus status) {
-      switch (status) {
-        case InternetStatus.connected:
-          _syncLocalToRemote();
-          Fluttertoast.showToast(
-              msg: "Internet Connected,Switching to remote db",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.green.shade400,
-              textColor: Colors.white,
-              fontSize: 16.0);
-          AppRepository.dbType = DatabaseType.remote;
-          add(TaskLoadEvent());
-
-          break;
-        case InternetStatus.disconnected:
-          Fluttertoast.showToast(
-              msg: "No Internet Connection,Switching to local db",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red.shade400,
-              textColor: Colors.white,
-              fontSize: 16.0);
-          AppRepository.dbType = DatabaseType.local;
-          add(TaskLoadEvent());
-
-          break;
+    _listener = InternetConnection()
+        .onStatusChange
+        .listen((InternetStatus status) async {
+      //syncing local to remote when internet is connected and db is local to ensure
+      //that the syncing takes place only once when internet is connected
+      if (status == InternetStatus.connected &&
+          AppRepository.dbType == DatabaseType.local) {
+        await _syncLocalToRemote();
+        Fluttertoast.showToast(
+            msg: "Internet Connected,Switching to remote db",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green.shade400,
+            textColor: Colors.white,
+            fontSize: 16.0);
+        AppRepository.dbType = DatabaseType.remote;
+      } else if (status == InternetStatus.disconnected &&
+          AppRepository.dbType == DatabaseType.remote) {
+        Fluttertoast.showToast(
+            msg: "No Internet Connection,Switching to local db",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red.shade400,
+            textColor: Colors.white,
+            fontSize: 16.0);
+        AppRepository.dbType = DatabaseType.local;
+        add(TaskLoadEvent());
       }
     });
   }
 
   ///It syncs the local database to remote database when internet is connected after disconnected
-  _syncLocalToRemote() async {
+  Future _syncLocalToRemote() async {
     ColoredLog.cyan('syncLocalToRemote initiated', name: "Event Triggered");
     try {
       Fluttertoast.showToast(msg: 'Syncing local to remote');
@@ -177,6 +178,9 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
           if (localTask.id == remoteTask.id &&
               localTask.updatedOn!.isAfter(remoteTask.updatedOn!)) {
             await FirebaseTaskRepository().editTask(localTask);
+          } else if (localTask.id != remoteTask.id) {
+            //syncing added tasks
+            await FirebaseTaskRepository().addTask(localTask);
           }
         }
       }
@@ -192,19 +196,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
           await FirebaseTaskRepository().deleteTask(remoteTask);
         }
       }
-
-      //syncing added tasks
-      for (Task localTask in localTasks) {
-        bool isAdded = true;
-        for (Task remoteTask in remoteTasks) {
-          if (localTask.id == remoteTask.id) {
-            isAdded = false;
-          }
-        }
-        if (isAdded) {
-          await FirebaseTaskRepository().addTask(localTask);
-        }
-      }
     } on AppException catch (e) {
       e.print;
     } catch (e) {
@@ -213,7 +204,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   }
 
   ///It syncs the remote database to local database all the time when load event is triggered
-  _syncRemoteToLocal(List<Task> remoteTasks) async {
+  Future _syncRemoteToLocal(List<Task> remoteTasks) async {
     ColoredLog.cyan('syncRemoteToLocal initiated', name: "Event Triggered");
     try {
       List<Task> localTasks = [];
@@ -240,6 +231,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       for (Task remoteTask in remoteTasks) {
         await HiveTaskRepository().editTask(remoteTask);
       }
+      add(TaskLoadEvent());
     } on AppException catch (e) {
       e.print;
     } catch (e) {

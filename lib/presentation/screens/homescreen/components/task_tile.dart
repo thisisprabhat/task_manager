@@ -32,8 +32,8 @@ class _TaskTileState extends State<TaskTile> {
             },
             icon: Icons.edit,
             label: 'Edit',
-            foregroundColor: Colors.blueGrey,
-            backgroundColor: Colors.transparent,
+            foregroundColor: colorScheme.tertiary,
+            backgroundColor: colorScheme.tertiary.withOpacity(0.2),
           ),
           SlidableAction(
             onPressed: (context) async {
@@ -42,7 +42,7 @@ class _TaskTileState extends State<TaskTile> {
             icon: Icons.delete,
             label: 'Delete',
             foregroundColor: Colors.red,
-            backgroundColor: Colors.transparent,
+            backgroundColor: Colors.red.withOpacity(0.2),
           ),
         ],
       ),
@@ -50,14 +50,14 @@ class _TaskTileState extends State<TaskTile> {
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         decoration: BoxDecoration(
           borderRadius: borderRadiusDefault,
-          color: colorScheme.background,
-          boxShadow: [
-            BoxShadow(
-              color: colorScheme.primary.withOpacity(0.1),
-              blurRadius: 5,
-              offset: const Offset(1, 2),
-            ),
-          ],
+          // color: colorScheme.background,
+          // boxShadow: [
+          //   BoxShadow(
+          //     color: colorScheme.primary.withOpacity(0.1),
+          //     blurRadius: 5,
+          //     offset: const Offset(1, 2),
+          //   ),
+          // ],
         ),
         child: ListTile(
           leading: Checkbox(
@@ -65,9 +65,10 @@ class _TaskTileState extends State<TaskTile> {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
             value: task.isCompleted,
             onChanged: (value) {
-              setState(() {
-                task.isCompleted = value!;
-              });
+              Task task = widget.task.copyWith()
+                ..updatedOn = DateTime.now()
+                ..isCompleted = value!;
+              context.read<TaskBloc>().add(TaskUpdateEvent(task));
             },
           ),
           //strike through text style

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import '/core/utils/colored_log.dart';
 import '/domain/exceptions/app_exception.dart';
@@ -18,7 +17,8 @@ class FirebaseTaskRepository implements TaskRepository {
     await _tasksCollection
         .doc(task.id)
         .set(task.toMap())
-        .then((doc) => Fluttertoast.showToast(msg: 'Task added successfully'))
+        .then((doc) => ColoredLog.green('task added successfully',
+            name: 'Firebase Tasks Added'))
         .catchError(AppExceptionHandler.handleFirebaseException);
   }
 
@@ -27,8 +27,8 @@ class FirebaseTaskRepository implements TaskRepository {
     await _tasksCollection
         .doc(task.id)
         .delete()
-        .then((val) =>
-            Fluttertoast.showToast(msg: '${task.title},deleted successfully'))
+        .then((val) => ColoredLog.red('task deleted successfully',
+            name: 'Firebase Tasks Deleted'))
         .catchError(AppExceptionHandler.handleFirebaseException);
   }
 
@@ -37,7 +37,8 @@ class FirebaseTaskRepository implements TaskRepository {
     await _tasksCollection
         .doc(task.id)
         .set(task.toMap(), SetOptions(merge: true))
-        .then((doc) => Fluttertoast.showToast(msg: 'task updated successfully'))
+        .then((doc) => ColoredLog.green('task updated successfully',
+            name: 'Firebase Tasks Edited'))
         .catchError(AppExceptionHandler.handleFirebaseException);
   }
 

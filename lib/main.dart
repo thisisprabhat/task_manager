@@ -34,8 +34,6 @@ class MyApp extends StatelessWidget {
       child: BlocBuilder<ConfigBloc, ConfigState>(
         builder: (context, state) => DynamicColorBuilder(
             builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
-          print(lightDynamic.toString() + 'dynamicLight');
-          print(darkDynamic.toString() + 'dynamicDark');
           ThemeColor themeColor = context.watch<ConfigBloc>().themeColor;
           ThemeData lightTheme = themeColor == ThemeColor.dynamic
               ? AppTheme.lightTheme(lightDynamic?.primary ?? Colors.blue)
